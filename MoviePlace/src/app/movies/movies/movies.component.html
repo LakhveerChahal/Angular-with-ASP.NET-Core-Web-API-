@@ -1,0 +1,4 @@
+<div class="d-flex flex-wrap">
+    <p *ngIf="isLoading">Loading...</p>
+    <app-movie *ngFor="let movie of movies" [movie]="movie"></app-movie>
+</div>

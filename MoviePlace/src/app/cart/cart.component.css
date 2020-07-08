@@ -1,0 +1,6 @@
+.removeBtn{
+    background-color: darkgoldenrod;
+}
+.removeBtn:hover{
+    background-color: darkorange;
+}

@@ -1,0 +1,9 @@
+.searchBtn{
+    background-color: darkcyan;
+    border-radius: 0%;
+    width: 35%;
+}
+
+.searchBtn:hover{
+    background-color: teal;
+}

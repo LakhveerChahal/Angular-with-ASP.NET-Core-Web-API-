@@ -1,0 +1,11 @@
+<div class="d-flex justify-content-center align-items-center" 
+    style="height: 90vh">
+    <div class="w-75 text-center">
+        <h1>FMOVIES</h1>
+        <summary class="text-info pb-2">The best place when it comes to Movies.</summary>
+        <div class="form-group">
+            <input type="text" [(ngModel)]="searchBox" class="form-control" placeholder="Search movies...">
+            <button class="btn mt-3 searchBtn" (click)="onSearchClick()">Search</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="movieDiv" (click)="movieDetail()">
+    Image goes here. 
+    <p>{{ movie.movieName | titlecase }}</p>
+    <p>Price: {{ movie.moviePrice | currency:'USD' }}</p>
+    <div class="btn-group">
+        <button type="button" class="btn detailbtn" (click)="movieDetail()">Details</button>
+        <button type="button" class="btn removeBtn" (click)="removeFromCart()" *ngIf="isPresentInCart;else addCartBtn">
+            Remove
+        </button>
+        <ng-template #addCartBtn>
+            <button type="button" class="btn cartbtn" (click)="addToCart()">
+                Add to Cart
+            </button>
+        </ng-template>
+    </div>
+</div>

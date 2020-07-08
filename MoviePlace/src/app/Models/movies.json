@@ -1,0 +1,22 @@
+{
+    "Movies": {
+        "0": {
+            "movieId": "0",
+            "movieName": "Avatar",
+            "moviePrice": "300",
+            "movieGenres":{
+                "0": "1"
+            },
+            "url": "https://tse1.mm.bing.net/th?id=OIP.JhE6fUEhIE-13-TS9wj2JAAAAA&w=80&h=110&c=8&rs=1&qlt=90&pid=3.1&rm=2"
+        },
+        "1": {
+            "movieId": "1",
+            "movieName": "Iron man",
+            "moviePrice": "200",
+            "moviemovieGenres":{
+                "0": "2"
+            },
+            "url": "https://th.bing.com/th/id/OIP.hb3lIAz5RV1RiBaTq0wOYgHaLH?w=181&h=272&c=7&o=5&pid=1.7"
+        }
+    }
+}

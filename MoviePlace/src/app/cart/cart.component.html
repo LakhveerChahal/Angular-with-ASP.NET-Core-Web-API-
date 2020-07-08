@@ -1,0 +1,15 @@
+<h1>
+    Your Cart
+</h1>
+<p *ngIf="isLoading">Loading...</p>
+<p *ngIf="movies.length === 0 && !isLoading">Your cart is empty :(</p>
+<div *ngIf="movies && movies.length>0 && !isLoading">
+    <div class="list-group">
+        <div class="list-group-item clearfix" *ngFor="let item of movies">
+            <p>Movie name: {{item.movieName}}</p>
+            <p>Price: {{item.moviePrice}}</p>
+            <button class="btn float-right removeBtn" type="button" (click)="onRemoveClick(item.movieId)">Remove</button>
+        </div>
+    </div>
+    <a [routerLink]="['/checkout']" class="btn btn-warning" >Checkout</a>
+</div>
