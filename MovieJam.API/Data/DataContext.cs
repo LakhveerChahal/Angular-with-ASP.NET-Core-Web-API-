@@ -6,7 +6,9 @@ namespace MovieJam.API.Data
     public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
-
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<GenresOfMovie> GenresOfMovies { get; set; }
+        public DbSet<Genre> Genres { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
