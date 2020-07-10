@@ -34,6 +34,7 @@ namespace MovieJam.API
             services.AddControllers();
             services.AddCors();
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -61,6 +62,7 @@ namespace MovieJam.API
 
             app.UseRouting();
 
+            // Order is important
             app.UseAuthentication();
             app.UseAuthorization();
 

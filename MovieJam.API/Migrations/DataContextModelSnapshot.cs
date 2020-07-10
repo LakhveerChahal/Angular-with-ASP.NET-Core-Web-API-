@@ -16,6 +16,46 @@ namespace MovieJam.API.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.5");
 
+            modelBuilder.Entity("MovieJam.API.Models.Cart", b =>
+                {
+                    b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CartCollectionId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateStamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Placed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("CartId");
+
+                    b.ToTable("Cart");
+                });
+
+            modelBuilder.Entity("MovieJam.API.Models.CartCollection", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CartCollectionId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CartCollection");
+                });
+
             modelBuilder.Entity("MovieJam.API.Models.Genre", b =>
                 {
                     b.Property<int>("Id")
