@@ -8,6 +8,7 @@ namespace MovieJam.API.Models
         public int UserId { get; set; }
         public string CartCollectionId { get; set; }
         public DateTime DateStamp { get; set; }
+        public float TotalPrice { get; set; }
         public Boolean Placed { get; set; }
     }
 }

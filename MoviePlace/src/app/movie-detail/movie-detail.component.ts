@@ -12,29 +12,20 @@ import { Genre } from '../Models/genre.model';
 })
 export class MovieDetailComponent implements OnInit {
   movieFound: Movie;
-  movieGenres: Genre[];
 
   constructor(private movieService: MovieService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.getId();
-    this.findGenres();
-    this.movieService.movieSubject.subscribe(movie => {
-      this.movieFound = movie;
-    })
+    // this.movieService.movieSubject.subscribe(movie => {
+    //   this.movieFound = movie;
+    // });
   }
 
   getMovieById(movieId: string){
-    this.movieService.getMovieById(movieId);
-  }
-  
-  findGenres(){
-    this.movieService.getGenres().subscribe(genres => {
-      genres.forEach(g => {
-        if(this.movieFound.movieGenres.includes(g.genreId)){
-          this.movieGenres.push(g);
-        }
-      })
+    this.movieService.getMovieById(movieId).subscribe(movie => {
+      this.movieFound = movie;
+      console.log(this.movieFound);
     });
   }
 

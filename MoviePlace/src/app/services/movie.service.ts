@@ -11,28 +11,17 @@ import { Genre } from '../Models/genre.model';
 export class MovieService {
   movies: Movie[];
   movieSubject = new Subject<Movie>();
-  moviesUrl = 'https://movieplace-97b9e.firebaseio.com/Movies.json';
+  // moviesUrl = 'https://movieplace-97b9e.firebaseio.com/Movies.json';
+  baseUrl = "http://localhost:5000/";
 
   constructor(private http: HttpClient) { }
 
   getMovies() {
-    return this.http.get<Movie []>(this.moviesUrl);
+    return this.http.get<Movie []>(this.baseUrl + 'movie/movies');
   }
 
   getMovieById(movieId: string){
-    this.getMovies().subscribe(m => {
-      const movies: Movie[] = m;
-      let movieFound: Movie;
-      movieFound = movies.find(m => m.movieId === movieId);
-      if (movieFound) {
-        this.movieSubject.next(movieFound);
-      }else{
-        this.movieSubject.next(null);
-      }
-    });
+    return this.http.get<Movie>(this.baseUrl + 'movie/' + movieId);
   }
 
-  getGenres() {
-    return this.http.get<Genre[]>(this.moviesUrl);
-  }
 }

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -7,15 +8,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  searchBox: string;
+  @ViewChild('searchForm') searchForm: NgForm;  
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    
+
   }
   onSearchClick() {
-    this.router.navigate(['/search', this.searchBox]);
+    this.router.navigate(['/search', this.searchForm.value.searchBox.toLowerCase()]);
   }
 
 }

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 import { CartItem } from '../Models/cart-item.model';
-import { MovieService } from './movie.service';
 import { Movie } from '../Models/movie.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,40 +13,30 @@ export class CartService{
   cart: CartItem[] = [];
   updateEvent = new Subject<void>();
   movieById: Movie;
+  baseUrl = 'http://localhost:5000/';
 
-  constructor(private movieService: MovieService) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   addToCart(movieId: string){
-    this.movieService.getMovieById(movieId);
-    const movieSub = this.movieService.movieSubject.subscribe(movie => {
-      this.movieById = movie;
-      this.addMovieToCart();
-      movieSub.unsubscribe();
+    const userId = this.authService.getLoggedInUserId();
+    const cartItem: CartItem = {
+      userId: userId,
+      movieId: movieId
+    };
+    return this.http.post(this.baseUrl + 'addToCart',
+    {
+      cartItem: cartItem
     });
-  }
-
-  private addMovieToCart(){
-    if(this.movieById){
-      let cartItem: CartItem = {
-        movieId: this.movieById.movieId,
-        price: this.movieById.moviePrice,
-        timestamp: Date.parse(Date.now().toString())
-      };
-      if(!this.cart.some(c => c.movieId === this.movieById.movieId)){
-        this.cart.push(cartItem);
-        this.emitUpdateEvent();
-      }
-    }
-    console.log(this.cart);
   }
 
   emitUpdateEvent(){
     this.updateEvent.next();
   }
 
-  contains(movieId: string): boolean{
-    return this.cart.some((m) => {
-      return m.movieId === movieId;
+  checkCart(){
+    const userId = this.authService.getLoggedInUserId();
+    return this.http.post<boolean>(this.baseUrl + '/myorders',{
+      userId: userId
     });
   }
 

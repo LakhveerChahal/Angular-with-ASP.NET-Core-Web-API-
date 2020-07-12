@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,15 @@ namespace MovieJam.API.Controllers
         {
             var cartOrder = await _context.Cart.FirstOrDefaultAsync(c => 
                 c.UserId == cartItemDto.UserId && c.Placed == false);
+            
+            var movie = await _context.Movies.SingleOrDefaultAsync(m => m.Id == cartItemDto.MovieId);
+            float moviePrice = 0;
+            if(movie == null){
+                return NotFound("Requested movie does not exist");
+            }
+            else{
+                moviePrice = movie.MoviePrice;
+            }
 
             if(cartOrder == null)
             {
@@ -36,7 +46,8 @@ namespace MovieJam.API.Controllers
                     CartCollectionId = Guid.NewGuid().ToString(),
                     DateStamp = DateTime.Now,
                     Placed = false,
-                    UserId = cartItemDto.UserId
+                    UserId = cartItemDto.UserId,
+                    TotalPrice = moviePrice
                 };
                 var cartCollection = new CartCollection
                 {
@@ -50,6 +61,19 @@ namespace MovieJam.API.Controllers
             }
             else
             {
+                var cartCollectionItem = await _context.CartCollection.SingleOrDefaultAsync(cc => 
+                    cc.CartCollectionId == cartOrder.CartCollectionId && cc.MovieId == cartItemDto.MovieId);
+
+                if(cartCollectionItem != null){
+                    return StatusCode(403, "Item already exists in cart");
+                }
+
+                await _context.Cart.ForEachAsync(c => {
+                    if(c.CartCollectionId == cartOrder.CartCollectionId){
+                        c.TotalPrice += moviePrice;
+                    }
+                });
+
                 var cartCollection = new CartCollection
                 {
                     CartCollectionId = cartOrder.CartCollectionId,
@@ -62,6 +86,27 @@ namespace MovieJam.API.Controllers
             }
 
             return StatusCode(201);
+        }
+
+        [HttpPost("myorders")]
+        [AllowAnonymous]
+        public async Task<IActionResult> OrdersInCart(string userId)
+        {
+            int id = Int32.Parse("1");
+            var cartItem = await _context.Cart.SingleOrDefaultAsync(c => 
+                c.UserId == id && c.Placed == false);
+
+            if(cartItem == null)
+            {
+                return Ok(userId);
+            }
+            
+            var cartCollectionItems = await _context.CartCollection.Where(c => 
+                c.CartCollectionId == cartItem.CartCollectionId).ToListAsync();
+            
+            // var orderedMovies = cartCollectionItems.Select(c => c.MovieId);
+
+            return Ok(cartCollectionItems);
         }
 
         [HttpPost("removeMovie")]

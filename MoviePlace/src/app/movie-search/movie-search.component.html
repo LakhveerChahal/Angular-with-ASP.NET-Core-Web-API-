@@ -1,5 +1,5 @@
 <h3>Your Search results...</h3>
-<div *ngIf="filteredMovies.length === 0;else filteredMoviesDiv">
+<div *ngIf="filteredMovies && filteredMovies.length === 0;else filteredMoviesDiv">
     Sorry, your search didn't match any record.
 </div>
 <ng-template #filteredMoviesDiv>

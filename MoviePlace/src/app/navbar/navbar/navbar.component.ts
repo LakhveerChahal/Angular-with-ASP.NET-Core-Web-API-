@@ -13,6 +13,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
   updateEventSub: Subscription;
   userSub: Subscription;
+  username: string = '';
+
   constructor(private cartService: CartService, private authService: AuthService) { }
 
   ngOnInit(): void {
@@ -21,11 +23,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
     this.userSub = this.authService.user.subscribe(user => {
       this.isLoggedIn = !!user;
+      if(user){
+        this.username = user.username;
+      }
     });
   }
 
   onLogout(){
     this.authService.logout();
+  }
+
+  LoggedIn(){
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
 
   ngOnDestroy(){

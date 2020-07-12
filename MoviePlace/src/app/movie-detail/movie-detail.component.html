@@ -1,15 +1,20 @@
-<div class="card">
-    <div class="card-header">
-        <h4 class="lead"> {{ movieFound.movieName | titlecase }} </h4>
+<div *ngIf="!movieFound">
+  Loading...
+</div>
+<div class="card mt-2" *ngIf="movieFound">
+  <div class="card-header">
+    <h1 class="display-5">{{ movieFound.movieName | titlecase }}</h1>
+  </div>
+  <div class="card-body">
+    <p>
+      Price: {{ movieFound.moviePrice | currency: "USD" }}
+      <br />
+    </p>
+    <div *ngIf="movieFound.genres">
+      Genres:
+      <span *ngFor="let genre of movieFound.genres; let i = index">
+        {{ genre.genreName }}<span *ngIf="i !== movieFound.genres.length - 1">,</span>
+      </span>
     </div>
-    <div class="card-body">
-        <p>
-            Movie price: {{ movieFound.moviePrice | currency:'USD' }}
-            <br>
-            MovieGenres:
-            <span *ngFor="let genre of movieGenres; let i = index;">
-                {{ genre.genreName }}<span *ngIf="i !== movieGenres.length-1">,</span>
-            </span>
-        </p>
-    </div>
+  </div>
 </div>

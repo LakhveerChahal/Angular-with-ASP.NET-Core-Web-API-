@@ -4,8 +4,11 @@
         <h1>FMOVIES</h1>
         <summary class="text-info pb-2">The best place when it comes to Movies.</summary>
         <div class="form-group">
-            <input type="text" [(ngModel)]="searchBox" class="form-control" placeholder="Search movies...">
-            <button class="btn mt-3 searchBtn" (click)="onSearchClick()">Search</button>
+            <form #searchForm="ngForm" (ngSubmit)="onSearchClick()">
+                <input type="text" name="searchBox" ngModel 
+                    class="form-control" placeholder="Search movies...">
+                <button type="submit" class="btn mt-3 searchBtn">Search</button>
+            </form>
         </div>
     </div>
 </div>

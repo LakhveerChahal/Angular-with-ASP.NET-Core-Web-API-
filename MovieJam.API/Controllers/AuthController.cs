@@ -42,7 +42,9 @@ namespace MovieJam.API.Controllers
             };
             var userCreated = await _auth.Register(userToCreate, userToRegisterDto.Password);
 
-            return StatusCode(201);
+            return await Login(new 
+                UserToLoginDto{UserName = userToCreate.Name, Password = userToRegisterDto.Password}
+            );
         }
 
         [HttpPost("login")]

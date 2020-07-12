@@ -14,7 +14,7 @@ export class MovieComponent implements OnInit {
   constructor(private route: Router, private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.checkCart();
+    
   }
 
   movieDetail(){
@@ -22,14 +22,12 @@ export class MovieComponent implements OnInit {
   }
 
   addToCart(){
-    this.cartService.addToCart(this.movie.movieId);
-    this.isPresentInCart = true;
+    this.cartService.addToCart(this.movie.movieId).subscribe(res => {
+      this.isPresentInCart = true;
+    });
     event.stopPropagation();
   }
 
-  checkCart(){
-    this.isPresentInCart = this.cartService.contains(this.movie.movieId);
-  }
 
   removeFromCart(){
     this.cartService.removeFromCart(this.movie.movieId);

@@ -17,12 +17,12 @@ export class MovieSearchComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((param) => {
       const searchString = param.searchString;
+
       this.movieService.getMovies().subscribe((data: Movie[]) => {
         const allMovies = data;
         this.filteredMovies = allMovies.filter(m => {
           return m.movieName.toLowerCase().includes(searchString.toLowerCase());
         });
-        console.log(this.filteredMovies);
       });
     });
   }

@@ -2,45 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieJam.API.Data;
 
 namespace MovieJam.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200711115158_RemovedCartTable")]
+    partial class RemovedCartTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.5");
-
-            modelBuilder.Entity("MovieJam.API.Models.Cart", b =>
-                {
-                    b.Property<int>("CartId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("CartCollectionId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("DateStamp")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("Placed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<float>("TotalPrice")
-                        .HasColumnType("REAL");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("CartId");
-
-                    b.ToTable("Cart");
-                });
 
             modelBuilder.Entity("MovieJam.API.Models.CartCollection", b =>
                 {

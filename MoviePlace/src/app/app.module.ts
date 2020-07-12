@@ -16,6 +16,7 @@ import { AuthComponent } from './auth/auth.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AuthInterceptor } from './services/auth-interceptor';
 import { AuthGuard } from './services/auth.guard';
+import { CommonModule } from '@angular/common';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -46,7 +47,8 @@ const appRoutes: Routes = [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CommonModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]

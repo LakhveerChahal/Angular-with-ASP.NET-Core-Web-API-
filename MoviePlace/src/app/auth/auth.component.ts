@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthService, AuthResponse } from '../services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
 import { User } from '../Models/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -11,16 +12,15 @@ import { User } from '../Models/user.model';
 })
 export class AuthComponent implements OnInit {
   isLoginMode = true;
-  authObs: Observable<AuthResponse>;
+  authObs: Observable<Object>;
   errorMsg: string;
   authUser: User;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.authService.user.subscribe(authData => {
       this.authUser = authData;
-      console.log(this.authUser);
     });
   }
 
@@ -28,18 +28,18 @@ export class AuthComponent implements OnInit {
     if(!form.valid){
       return;
     }
-    const email = form.value.email;
+    const username = form.value.username;
     const password = form.value.password;
 
     if(this.isLoginMode){
-      this.authObs = this.authService.login(email, password);
+      this.authObs = this.authService.login(username, password);
     }
     else{
-      this.authObs = this.authService.signUp(email, password);
+      this.authObs = this.authService.signUp(username, password);
     }
     this.authObs.subscribe(
       res => {
-
+        this.router.navigate(['/home']);
       },
       err => {
         this.errorMsg = err;
